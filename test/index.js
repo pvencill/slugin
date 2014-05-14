@@ -47,8 +47,8 @@ describe('Slugin', function(){
         it('one kitten should have a slug of "mittens"', function(){
             _.where(kittens, {slug: 'mittens'}).should.have.length(1);
         });
-        it('one kitten should have a slug of "mittens_{num}"', function(){
-            _.filter(kittens, function(k){ return (/mittens_\d+/).test(k.slug);});
+        it('one kitten should have a slug of "mittens-{num}"', function(){
+            _.filter(kittens, function(k){ return (/mittens-\d+/).test(k.slug);});
         });
     });
 });

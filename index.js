@@ -45,7 +45,7 @@ function incrementAndSave(document, options, cb){
         var it = (doc[itKey] || 0) + Math.ceil(Math.random()*10);
 
         document[itKey] = it;
-        document[options.slugName] = document[slugbaseKey]+'_'+it;
+        document[options.slugName] = document[slugbaseKey]+'-'+it;
 
         return document.save(cb);
     });
@@ -74,7 +74,7 @@ function Slugin(schema, options){
     createIndex(schema, options);
 
     schema.pre('save', function(next){
-        if(!this[options.slugName]){  // TODO: maybe just do this when isNew ?
+        if(!this[options.slugName]){  // TODO: handle changes to the source
             this[options.slugName] = slugify(this, options);
             this[options.slugName + '_base'] = this[options.slugName];
         }
@@ -96,8 +96,7 @@ function Slugin(schema, options){
 Slugin.defaultOptions = {
     slugName : 'slug',
     source : 'title',
-    index : null,
-    unique: true
+    index : null
 };
 
 module.exports = Slugin;
