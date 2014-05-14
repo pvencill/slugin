@@ -24,9 +24,6 @@ function createIndex(schema, options){
         throw new Error('Index option improperly formatted, please see Slugin documentation');
     }
 
-    console.log('indexing: ');
-    console.log(idx);
-
     schema.index(idx, {unique : true, sparse: true});
 }
 
@@ -41,20 +38,14 @@ function incrementAndSave(document, options, cb){
     var slugbaseKey = options.slugName + '_base';
     var itKey = options.slugName + '_it';
     params[slugbaseKey] = document[slugbaseKey];
-    console.log('searching for');
-    console.log(params);
+
     Model.findOne(params).sort('-'+itKey).exec(function(e, doc){
         if(e) return cb(e);
-        console.log('found');
-        console.log(doc);
 
         var it = (doc[itKey] || 0) + Math.ceil(Math.random()*10);
-        console.log('it: ',it);
 
         document[itKey] = it;
         document[options.slugName] = document[slugbaseKey]+'_'+it;
-        console.log('updated document should look like this:');
-        console.log(document);
 
         return document.save(cb);
     });
@@ -66,8 +57,7 @@ function Slugin(schema, options){
 
     var fields = {};
     fields[options.slugName] = {
-        type : String,
-        index : true
+        type : String
     };
 
     fields[options.slugName + '_base'] = {
@@ -93,10 +83,8 @@ function Slugin(schema, options){
 
     schema.methods.save = function(cb){
         var self = this;
-        console.log('saving');
         mongoose.Model.prototype.save.call(self, function(e, model, num){
-            if(e && e.code === 11000 && !~e.err.indexOf(self.slug)){
-                console.log('found a duplicate');
+            if(e && e.code === 11000 && !!~e.err.indexOf(self.slug)){
                 incrementAndSave(self, options, cb);
             }else{
                 cb(e,model,num);
