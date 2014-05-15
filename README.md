@@ -36,4 +36,4 @@ In most cases you'll use the Schema syntax of YourSchema.plugin(slugin, options)
 
 * `slugName` - What property you want created on your schema to store the completed slug.  Defaults to 'slug'.  Also creates a pair of properties to hold the string and numeric parts of the slug for more efficient querying. Those will be {slugName}_base and {slugName}_it respectively.
 * `source` - The property or properties on your schema that you want to use as the source of the slug. Can be a string property name or array of properties. Defaults to 'title'. 
-* 'modelName' - The name you use to store your schema in mongoose when you call mongoose.model('modelName', schema). Defaults to pascal-casing the mongodb collection name for your model (e.g. the mongodb collection name "posts" will be interpreted as a modelName 'Posts').  
+* `modelName` - The name you use to store your schema in mongoose when you call mongoose.model('modelName', schema). Defaults to pascal-casing the mongodb collection name for your model (e.g. the mongodb collection name "posts" will be interpreted as a modelName 'Posts').  
