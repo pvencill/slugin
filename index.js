@@ -18,8 +18,8 @@ function getModel(document, options){
 function incrementAndSave(document, options, cb){
     var Model = getModel(document, options);
     var params = {};
-    var slugbaseKey = options.slugName + '_base';
-    var itKey = options.slugName + '_it';
+    var slugbaseKey = options.slugBase;
+    var itKey = options.slugIt;
     params[slugbaseKey] = document[slugbaseKey];
 
     Model.findOne(params).sort('-'+itKey).exec(function(e, doc){
@@ -38,28 +38,31 @@ function Slugin(schema, options){
     options = _.defaults(options || {}, Slugin.defaultOptions);
     if(_.isString(options.source))
         options.source = [options.source];
-
+    options.slugIt = options.slugName + '_it';
+    options.slugBase = options.slugName + '_base';
     var fields = {};
     fields[options.slugName] = {
         type : String,
         unique: true
     };
 
-    fields[options.slugName + '_base'] = {
+    fields[options.slugBase] = {
         type: String,
         index:true
     };
 
-    fields[options.slugName + '_it'] = {
+    fields[options.slugIt] = {
         type: Number
     };
 
     schema.add(fields);
 
     schema.pre('save', function(next){
-        if(!this[options.slugName]){  // TODO: handle changes to the source
-            this[options.slugName] = slugify(this, options);
-            this[options.slugName + '_base'] = this[options.slugName];
+        var slugBase = slugify(this,options);
+        if(this[options.slugBase] !== slugBase){  // TODO: handle changes to the source
+            this[options.slugName] = slugBase;
+            this[options.slugBase] = slugBase;
+            delete this[options.slugIt]
         }
         next();
     });

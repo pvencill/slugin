@@ -56,6 +56,32 @@ describe('Slugin', function(){
         });
     });
 
+    describe('When you have a kitten named "Mittens"', function(){
+        before(setup);
+        before(function(done){
+            new Kitten({ name : 'Mittens'}).save(done);
+        });
+        describe('and you want to rename him "Boots"', function(){
+            var kitten = null;
+            before(function(done){
+                Kitten.findOne({name: 'Mittens'}, function(e,k){
+                    if(e) return done(e);
+                    k.name = 'Boots';
+                    k.save(function(e,boots){
+                        if(e) return done(e);
+                        kitten = boots;
+                        done();
+                    });
+                });
+            });
+            it('should have its slug set to "boots"', function(){
+                kitten.slug.should.eql('boots');
+                kitten.slug_base.should.eql('boots');
+                kitten.should.not.have.ownProperty('slug_it');
+            });
+        });
+    });
+
     describe('When indexing cars with the same model name', function(){
         var cars = null;
         before(setup);
