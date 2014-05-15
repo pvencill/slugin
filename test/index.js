@@ -5,7 +5,10 @@ var mongoose = require('mongoose'),
 mongoose.connect('mongodb://localhost:27017/spike');
 
 function setup(done){
-    Kitten.remove(done);
+    Kitten.remove(function(e){
+        if(e) return done(e);
+        Car.remove(done);
+    });
 }
 
 describe('Slugin', function(){
@@ -54,31 +57,35 @@ describe('Slugin', function(){
     });
 
     describe('When indexing cars with the same model name', function(){
-        describe('from the same manufacturer', function(){
-            var cars = null;
-            before(setup);
-            before(function(done){
+        var cars = null;
+        before(setup);
+        before(function(done){
+            new Car({make: 'Toyota', model: 'Highlander'}).save(function(e){
+                if(e) return done(e);
                 new Car({make: 'Toyota', model: 'Highlander'}).save(function(e){
                     if(e) return done(e);
-                    new Car({make: 'Toyota', model: 'Highlander'}).save(function(e){
-                        if(e) return done(e);
-                        new Car({make: 'Scottish', model: 'Highlander'}).save(done);
-                    });
+                    new Car({make: 'Scottish', model: 'Highlander'}).save(done);
                 });
             });
-            before(function(done){
-                Car.find({}, function(e,docs){
-                    if(e) return done(e);
-                    cars = docs;
-                    done();
-                });
+        });
+        before(function(done){
+            Car.find({}, function(e,docs){
+                if(e) return done(e);
+                cars = docs;
+                done();
             });
-            it('should still uniquely slugify the model name', function(done){
-                cars.length.should.eql(3);
+        });
+        describe('from the same manufacturer', function(){
+            it('should still uniquely slugify', function(){
+                var slugs = _.pluck(cars, 'slug');
+                slugs.length.should.eql(cars.length);
             });
         });
         describe('from different manufacturers', function(){
-            it('should allow the same model name for each');
+            it('should allow the same model name for each without bumping the iterator', function(){
+                var scot = _.find(cars, {make:'Scottish'});
+                scot.slug.should.eql('scottish-highlander');
+            });
         });
     });
 });

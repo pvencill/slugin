@@ -12,7 +12,7 @@ function slugify(model, options){
 
 function getModel(document, options){
     var modelName = pascal(options.modelName || document.collection.name);
-    return document.model(modelName);
+    return mongoose.model(modelName);
 }
 
 function incrementAndSave(document, options, cb){
@@ -67,7 +67,7 @@ function Slugin(schema, options){
     schema.methods.save = function(cb){
         var self = this;
         mongoose.Model.prototype.save.call(self, function(e, model, num){
-            if(e && e.code === 11000 && _.every(options.source, function(prop) { return !!~e.err.indexOf(self[prop]); })){
+            if(e && e.code === 11000 && !!~e.err.indexOf(self[options.slugName])){
                 incrementAndSave(self, options, cb);
             }else{
                 cb(e,model,num);
@@ -78,7 +78,8 @@ function Slugin(schema, options){
 
 Slugin.defaultOptions = {
     slugName : 'slug',
-    source : 'title'
+    source : 'title',
+    modelName : null
 };
 
 module.exports = Slugin;
