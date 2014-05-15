@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
       _                 = require('lodash'),
+      Car             = require('./car'),
       Kitten         = require('./kitten');
 mongoose.connect('mongodb://localhost:27017/spike');
 
@@ -49,6 +50,35 @@ describe('Slugin', function(){
         });
         it('one kitten should have a slug of "mittens-{num}"', function(){
             _.filter(kittens, function(k){ return (/mittens-\d+/).test(k.slug);});
+        });
+    });
+
+    describe('When indexing cars with the same model name', function(){
+        describe('from the same manufacturer', function(){
+            var cars = null;
+            before(setup);
+            before(function(done){
+                new Car({make: 'Toyota', model: 'Highlander'}).save(function(e){
+                    if(e) return done(e);
+                    new Car({make: 'Toyota', model: 'Highlander'}).save(function(e){
+                        if(e) return done(e);
+                        new Car({make: 'Scottish', model: 'Highlander'}).save(done);
+                    });
+                });
+            });
+            before(function(done){
+                Car.find({}, function(e,docs){
+                    if(e) return done(e);
+                    cars = docs;
+                    done();
+                });
+            });
+            it('should still uniquely slugify the model name', function(done){
+                cars.length.should.eql(3);
+            });
+        });
+        describe('from different manufacturers', function(){
+            it('should allow the same model name for each');
         });
     });
 });

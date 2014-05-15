@@ -7,24 +7,7 @@ var mongoose = require('mongoose'),
 
 function slugify(model, options){
     var slugParts = _.values(_.pick(model, options.source));
-    if(options.suffix)
-        slugParts.push(options.suffix);
     return slugs(slugParts.join(' '));
-}
-
-function createIndex(schema, options){
-    var idx = {};
-    if(_.isString(options.index)){
-        idx[options.index] = 1;
-    }else if (_.isArray(options.index)){
-        idx = _.zipObject(options.index, _.range(1, options.index.length + 1, 0));
-    }else if (_.isObject(options.index)){
-        idx = options.index;
-    } else {
-        throw new Error('Index option improperly formatted, please see Slugin documentation');
-    }
-
-    schema.index(idx, {unique : true, sparse: true});
 }
 
 function getModel(document, options){
@@ -53,11 +36,13 @@ function incrementAndSave(document, options, cb){
 
 function Slugin(schema, options){
     options = _.defaults(options || {}, Slugin.defaultOptions);
-    options.index = options.index || options.slugName;
+    if(_.isString(options.source))
+        options.source = [options.source];
 
     var fields = {};
     fields[options.slugName] = {
-        type : String
+        type : String,
+        unique: true
     };
 
     fields[options.slugName + '_base'] = {
@@ -71,8 +56,6 @@ function Slugin(schema, options){
 
     schema.add(fields);
 
-    createIndex(schema, options);
-
     schema.pre('save', function(next){
         if(!this[options.slugName]){  // TODO: handle changes to the source
             this[options.slugName] = slugify(this, options);
@@ -84,7 +67,7 @@ function Slugin(schema, options){
     schema.methods.save = function(cb){
         var self = this;
         mongoose.Model.prototype.save.call(self, function(e, model, num){
-            if(e && e.code === 11000 && !!~e.err.indexOf(self.slug)){
+            if(e && e.code === 11000 && _.every(options.source, function(prop) { return !!~e.err.indexOf(self[prop]); })){
                 incrementAndSave(self, options, cb);
             }else{
                 cb(e,model,num);
@@ -95,8 +78,7 @@ function Slugin(schema, options){
 
 Slugin.defaultOptions = {
     slugName : 'slug',
-    source : 'title',
-    index : null
+    source : 'title'
 };
 
 module.exports = Slugin;
