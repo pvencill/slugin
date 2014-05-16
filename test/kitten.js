@@ -5,4 +5,4 @@ var kittySchema = mongoose.Schema({ name: String });
 
 kittySchema.plugin(slugin, {source: 'name'});
 
-module.exports = mongoose.model('Kittens', kittySchema);
+module.exports = mongoose.model('Kitten', kittySchema);

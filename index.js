@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-      _                 = require('lodash'),
-      pascal        = require('to-pascal-case'),
-      slugs          = require('slugs');
+var mongoose          = require('mongoose'),
+      _               = require('lodash'),
+      inflection      = require('inflection'),
+      slugs           = require('slugs');
 
 function slugify(model, options){
     var slugParts = _.values(_.pick(model, options.source));
@@ -11,7 +11,7 @@ function slugify(model, options){
 }
 
 function getModel(document, options){
-    var modelName = pascal(options.modelName || document.collection.name);
+    var modelName = options.modelName || inflection.singularize(inflection.camelize(document.collection.name));
     return mongoose.model(modelName);
 }
 
