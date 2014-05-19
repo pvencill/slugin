@@ -62,7 +62,7 @@ function Slugin(schema, options){
         if(this[options.slugBase] !== slugBase){  // TODO: handle changes to the source
             this[options.slugName] = slugBase;
             this[options.slugBase] = slugBase;
-            delete this[options.slugIt]
+            delete this[options.slugIt];
         }
         next();
     });
