@@ -12,7 +12,7 @@ function slugify(model, options){
 
 function getModel(document, options){
     var modelName = options.modelName || inflection.singularize(inflection.camelize(document.collection.name));
-    return mongoose.model(modelName);
+    return document.collection.conn.model(modelName);
 }
 
 function incrementAndSave(document, options, cb){
