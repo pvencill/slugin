@@ -70,7 +70,7 @@ function Slugin(schema, options){
     schema.methods.save = function(cb){
         var self = this;
         mongoose.Model.prototype.save.call(self, function(e, model, num){
-            if(e && e.code === 11000 && !!~e.err.indexOf(self[options.slugName])){
+            if(e && (e.code === 11000  || e.code === 11001) && !!~e.err.indexOf(self[options.slugName])){
                 incrementAndSave(self, options, cb);
             }else{
                 cb(e,model,num);
