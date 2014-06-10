@@ -2,6 +2,7 @@
 
 var mongoose          = require('mongoose'),
       _               = require('lodash'),
+      chalk = require('chalk'),
       inflection      = require('inflection'),
       slugs           = require('slugs');
 
