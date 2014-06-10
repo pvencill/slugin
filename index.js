@@ -2,6 +2,7 @@
 
 var mongoose          = require('mongoose'),
       _               = require('lodash'),
+      chalk = require('chalk'),
       inflection      = require('inflection'),
       slugs           = require('slugs');
 
@@ -29,6 +30,11 @@ function incrementAndSave(document, options, cb){
 
         document[itKey] = it;
         document[options.slugName] = document[slugbaseKey]+'-'+it;
+        document.markModified(slugbaseKey);
+
+        _.forEach(options.source, function(item){
+            document.markModified(item);
+        });
 
         return document.save(cb);
     });
@@ -58,8 +64,10 @@ function Slugin(schema, options){
     schema.add(fields);
 
     schema.pre('save', function(next){
+        var self = this;
         var slugBase = slugify(this,options);
-        if(this[options.slugBase] !== slugBase){  // TODO: handle changes to the source
+        console.log('Old base: %s ; New Base: %s', this[options.slugBase], slugBase);
+        if(this[options.slugBase] !== slugBase){
             this[options.slugName] = slugBase;
             this[options.slugBase] = slugBase;
             delete this[options.slugIt];
@@ -70,7 +78,7 @@ function Slugin(schema, options){
     schema.methods.save = function(cb){
         var self = this;
         mongoose.Model.prototype.save.call(self, function(e, model, num){
-            if(e && e.code === 11000 && !!~e.err.indexOf(self[options.slugName])){
+            if(e && (e.code === 11000  || e.code === 11001) && !!~e.err.indexOf(self[options.slugName])){
                 incrementAndSave(self, options, cb);
             }else{
                 cb(e,model,num);
