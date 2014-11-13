@@ -65,7 +65,6 @@ function Slugin(schema, options){
     schema.pre('save', function(next){
         var self = this;
         var slugBase = slugify(this,options);
-        console.log('Old base: %s ; New Base: %s', this[options.slugBase], slugBase);
         if(this[options.slugBase] !== slugBase){
             this[options.slugName] = slugBase;
             this[options.slugBase] = slugBase;
