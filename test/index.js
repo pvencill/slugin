@@ -1,7 +1,9 @@
-var mongoose = require('mongoose'),
-      _                 = require('lodash'),
-      Car             = require('./car'),
-      Kitten         = require('./kitten');
+var
+    mongoose = require('mongoose'),
+    should   = require('should'),
+    _        = require('lodash'),
+    Car      = require('./car'),
+    Kitten   = require('./kitten');
 mongoose.connect('mongodb://localhost:27017/spike');
 
 function setup(done){
