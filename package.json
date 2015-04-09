@@ -1,6 +1,6 @@
 {
-  "name": "slugin",
-  "version": "0.0.12",
+  "name": "mongoose-slugin",
+  "version": "0.1.0",
   "description": "Unique slugs plugin for mongoose that is lightweight, concurrency safe, but also follows the normal mongoose plugin pattern.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/pvencill/slugin.git"
+    "url": "https://github.com/mrphelz/slugin.git"
   },
   "keywords": [
     "mongoose",
@@ -16,12 +16,12 @@
     "slug",
     "plugin"
   ],
-  "author": "Paul Vencill",
+  "author": "Phelipe de Sterlich <p.desterlich@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pvencill/slugin/issues"
+    "url": "https://github.com/mrphelz/slugin/issues"
   },
-  "homepage": "https://github.com/pvencill/slugin",
+  "homepage": "https://github.com/mrphelz/slugin",
   "dependencies": {
     "inflection": "^1.7.0",
     "lodash": "^3.6.0",

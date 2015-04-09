@@ -3,17 +3,19 @@ slugin
 
 Unique URL-friendly slugs plugin for mongoose that is lightweight, concurrency safe, but also follows the normal mongoose plugin pattern. Unlike some of the other offerings in NPM, this one also requires minimal effort on your part by using the standard mongoose plugin syntax.
 
+based on Paul Vencill's [slugin](https://github.com/pvencill/slugin) plugin
+
 ## Getting started
 Install the plugin with npm:
 
 ```sh
-npm install slugin
+npm install mongoose-slugin
 ```
 
 Add the plugin to your schema:
 
 ```javascript
-var slugin = require('slugin');
+var slugin = require('mongoose-slugin');
 
 // Your awesome schema building here
 
