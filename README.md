@@ -1,6 +1,8 @@
 slugin
 ======
 
+[![Dependency Status](https://david-dm.org/mrphelz/slugin.svg?theme=shields.io)](https://david-dm.org/mrphelz/slugin) [![devDependency Status](https://david-dm.org/mrphelz/slugin/dev-status.svg?theme=shields.io)](https://david-dm.org/mrphelz/slugine#info=devDependencies)
+
 Unique URL-friendly slugs plugin for mongoose that is lightweight, concurrency safe, but also follows the normal mongoose plugin pattern. Unlike some of the other offerings in NPM, this one also requires minimal effort on your part by using the standard mongoose plugin syntax.
 
 based on Paul Vencill's [slugin](https://github.com/pvencill/slugin) plugin
