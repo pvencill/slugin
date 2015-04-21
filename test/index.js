@@ -3,13 +3,17 @@ var
     should   = require('should'),
     _        = require('lodash'),
     Car      = require('./car'),
-    Kitten   = require('./kitten');
+    Kitten   = require('./kitten'),
+    Person   = require('./person');
 mongoose.connect('mongodb://localhost:27017/spike');
 
 function setup(done){
     Kitten.remove(function(e){
         if(e) return done(e);
-        Car.remove(done);
+        Car.remove(function(e) {
+            if(e) return done(e);
+            Person.remove(done);
+        });
     });
 }
 
@@ -113,6 +117,28 @@ describe('Slugin', function(){
             it('should allow the same model name for each without bumping the iterator', function(){
                 var scot = _.find(cars, {make:'Scottish'});
                 scot.slug.should.eql('scottish-highlander');
+            });
+        });
+    });
+
+    describe('When saving a single person with a deep path slug source', function(){
+        before(setup);
+
+        before(function(done){
+            var someGuy = new Person({
+                name : {
+                    first: 'Some',
+                    last: 'Guy'
+                }
+            });
+            someGuy.save(done);
+        });
+
+        it('Should save the person to the database with a slug based on the name object paths', function(done){
+            Person.findOne({slug_base : 'some-guy'}, function(e,k){
+                (e===null).should.be.true;
+                k.slug.should.eql('some-guy');
+                done();
             });
         });
     });
