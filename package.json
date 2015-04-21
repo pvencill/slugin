@@ -24,7 +24,7 @@
   "homepage": "https://github.com/mrphelz/slugin",
   "dependencies": {
     "inflection": "^1.7.0",
-    "lodash": "^3.6.0",
+    "lodash": "^3.7.0",
     "mongoose": "^4.0.1",
     "slugs": "^0.1.3"
   },
