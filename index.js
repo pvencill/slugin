@@ -6,7 +6,9 @@ var mongoose          = require('mongoose'),
       slugs           = require('slugs');
 
 function slugify(model, options){
-    var slugParts = _.values(_.pick(model, options.source));
+    var slugParts = _.map(options.source, function(path) {
+        return _.get(model, path);
+    });
     return slugs(slugParts.join(' '));
 }
 
