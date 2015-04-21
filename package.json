@@ -29,6 +29,6 @@
     "slugs": "^0.1.3"
   },
   "devDependencies": {
-    "should": "^5.2.0"
+    "should": "^6.0.0"
   }
 }
