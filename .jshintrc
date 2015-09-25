@@ -1,0 +1,7 @@
+{
+  "undef"       : true,
+  "unused"      : true,
+  "predef"      : ["__dirname", "require", "module", "console", "process", "describe", "before", "it", "after", "afterEach"],
+  "exported"    : ["should"],
+  "globalstrict": true
+}
