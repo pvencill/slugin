@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mrphelz/slugin.git"
+    "url": "https://github.com/pdesterlich/slugin.git"
   },
   "keywords": [
     "mongoose",
@@ -19,9 +19,9 @@
   "author": "Phelipe de Sterlich <p.desterlich@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mrphelz/slugin/issues"
+    "url": "https://github.com/pdesterlich/slugin/issues"
   },
-  "homepage": "https://github.com/mrphelz/slugin",
+  "homepage": "https://github.com/pdesterlich/slugin",
   "dependencies": {
     "inflection": "^1.7.0",
     "lodash": "^3.7.0",
