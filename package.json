@@ -1,6 +1,6 @@
 {
   "name": "mongoose-slugin",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Unique slugs plugin for mongoose that is lightweight, concurrency safe, but also follows the normal mongoose plugin pattern.",
   "main": "index.js",
   "scripts": {
