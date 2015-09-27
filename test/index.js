@@ -2,7 +2,7 @@
 
 var
   mongoose = require('mongoose'),
-  should   = require('should'),
+  should   = require('chai').should(),
   _        = require('lodash'),
   Car      = require('./car'),
   Kitten   = require('./kitten'),
