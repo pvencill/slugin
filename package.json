@@ -1,6 +1,6 @@
 {
   "name": "moorea-mongoose-slugin",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Unique slugs plugin for mongoose that is lightweight, concurrency safe, but also follows the normal mongoose plugin pattern.",
   "main": "index.js",
   "scripts": {
