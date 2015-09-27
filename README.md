@@ -10,7 +10,7 @@ based on Paul Vencill's [slugin](https://github.com/pvencill/slugin) plugin
 Install the plugin with npm:
 
 ```sh
-npm install mongoose-slugin
+npm install moorea-mongoose-slugin
 ```
 
 Add the plugin to your schema:
