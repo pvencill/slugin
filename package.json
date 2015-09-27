@@ -1,5 +1,5 @@
 {
-  "name": "mongoose-slugin",
+  "name": "moorea-mongoose-slugin",
   "version": "0.1.4",
   "description": "Unique slugs plugin for mongoose that is lightweight, concurrency safe, but also follows the normal mongoose plugin pattern.",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pdesterlich/slugin.git"
+    "url": "https://github.com/pdesterlich/moorea-mongoose-slugin.git"
   },
   "keywords": [
     "mongoose",
