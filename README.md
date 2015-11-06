@@ -1,19 +1,22 @@
-slugin
-======
+# moorea-mongoose-slugin
+
+[![Dependency Status](https://david-dm.org/pdesterlich/moorea-mongoose-slugin.svg?theme=shields.io)](https://david-dm.org/pdesterlich/moorea-mongoose-slugin) [![devDependency Status](https://david-dm.org/pdesterlich/moorea-mongoose-slugin/dev-status.svg?theme=shields.io)](https://david-dm.org/pdesterlich/moorea-mongoose-slugin#info=devDependencies)
 
 Unique URL-friendly slugs plugin for mongoose that is lightweight, concurrency safe, but also follows the normal mongoose plugin pattern. Unlike some of the other offerings in NPM, this one also requires minimal effort on your part by using the standard mongoose plugin syntax.
+
+based on Paul Vencill's [slugin](https://github.com/pvencill/slugin) plugin
 
 ## Getting started
 Install the plugin with npm:
 
 ```sh
-npm install slugin
+npm install moorea-mongoose-slugin
 ```
 
 Add the plugin to your schema:
 
 ```javascript
-var slugin = require('slugin');
+var slugin = require('moorea-mongoose-slugin');
 
 // Your awesome schema building here
 
@@ -35,5 +38,5 @@ Why the random numbers?  Well, I decided that for a few edge cases if you had tw
 In most cases you'll use the Schema syntax of YourSchema.plugin(slugin, options) instead.  Options are, as one would expect, optional.
 
 * `slugName` - What property you want created on your schema to store the completed slug.  Defaults to 'slug'.  Also creates a pair of properties to hold the string and numeric parts of the slug for more efficient querying. Those will be {slugName}_base and {slugName}_it respectively.
-* `source` - The property or properties on your schema that you want to use as the source of the slug. Can be a string property name or array of properties. Defaults to 'title'. 
+* `source` - The property or properties on your schema that you want to use as the source of the slug. Can be a string property name or array of properties. Defaults to 'title'.
 * `modelName` - The name you use to store your schema in mongoose when you call mongoose.model('modelName', schema). Defaults to pascal-casing the mongodb collection name for your model (e.g. the mongodb collection name "posts" will be interpreted as a modelName 'Posts').  
